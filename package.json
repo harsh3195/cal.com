@@ -162,11 +162,11 @@
       "prettier --write",
       "eslint"
     ],
-    "./prisma/schema.prisma": [
+    "./packages/prisma/schema.prisma": [
       "prisma format"
     ]
   },
   "prisma": {
-    "seed": "ts-node ./prisma/seed.ts"
+    "seed": "ts-node ./packages/prisma/seed.ts"
   }
 }
