@@ -1,7 +1,8 @@
-import { Page, test } from "@playwright/test";
+import { expect, Page, test } from "@playwright/test";
 import { createServer, IncomingMessage, ServerResponse } from "http";
 
 export function todo(title: string) {
+  // eslint-disable-next-line playwright/no-skipped-test
   test.skip(title, () => {});
 }
 
@@ -72,10 +73,11 @@ export async function selectFirstAvailableTimeSlotNextMonth(page: Page) {
   // @TODO: Find a better way to make test wait for full month change render to end
   // so it can click up on the right day, also when resolve remove other todos
   // Waiting for full month increment
+  // eslint-disable-next-line playwright/no-wait-for-timeout
   await page.waitForTimeout(1000);
   // TODO: Find out why the first day is always booked on tests
   await page.locator('[data-testid="day"][data-disabled="false"]').nth(1).click();
-  await page.click('[data-testid="time"]');
+  await page.locator('[data-testid="time"]').nth(0).click();
 }
 
 export async function selectSecondAvailableTimeSlotNextMonth(page: Page) {
@@ -83,6 +85,7 @@ export async function selectSecondAvailableTimeSlotNextMonth(page: Page) {
   // @TODO: Find a better way to make test wait for full month change render to end
   // so it can click up on the right day, also when resolve remove other todos
   // Waiting for full month increment
+  // eslint-disable-next-line playwright/no-wait-for-timeout
   await page.waitForTimeout(1000);
   // TODO: Find out why the first day is always booked on tests
   await page.locator('[data-testid="day"][data-disabled="false"]').nth(1).click();
@@ -93,10 +96,7 @@ export async function bookFirstEvent(page: Page) {
   // Click first event type
   await page.click('[data-testid="event-type-link"]');
   await selectFirstAvailableTimeSlotNextMonth(page);
-  // --- fill form
-  await page.fill('[name="name"]', "Test Testson");
-  await page.fill('[name="email"]', "test@example.com");
-  await page.press('[name="email"]', "Enter");
+  await bookTimeSlot(page);
 
   // Make sure we're navigated to the success page
   await page.waitForNavigation({
@@ -104,6 +104,7 @@ export async function bookFirstEvent(page: Page) {
       return url.pathname.endsWith("/success");
     },
   });
+  await expect(page.locator("[data-testid=success-page]")).toBeVisible();
 }
 
 export const bookTimeSlot = async (page: Page) => {

@@ -1,5 +1,12 @@
 runtime: custom
-env: standard
+env: flex
+
+# instance_class: F2
+
+
+env_variables:
+  DATABASE_URL: "postgresql://doadmin:3TfPHMUJtuYznpzd@db-postgresql-blr1-07596-do-user-9368613-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require"
+  DATABASE_HOST: "postgresql://doadmin:3TfPHMUJtuYznpzd@db-postgresql-blr1-07596-do-user-9368613-0.b.db.ondigitalocean.com"
 
 # This sample incurs costs to run on the App Engine flexible environment.
 # The settings below are to reduce costs during testing and are not appropriate
